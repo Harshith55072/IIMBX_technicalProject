@@ -2,7 +2,8 @@
 
 A small web chatbot that answers student questions about the *Digital Product Management (DPM-101)* course **only from the official course documents**, shows which file each answer came from, and keeps Gemini usage low with caching and request control.
 
-- **Live URL:** _add the Render URL here after deploying_ (free tier: the first request after idle can take ~30-60 s while the service wakes up)
+- **Live URL:** https://dpm101-helpdesk.onrender.com (free tier: the first request after idle can take ~30-60 s while the service wakes up; health check: `/health`, live counters: `/api/stats`)
+- **Repo:** https://github.com/Harshith55072/IIMBX_technicalProject
 - **Stack:** Python 3.11, FastAPI, Google Gemini (`gemini-2.5-flash-lite` via `google-genai`), vanilla HTML/JS front end, in-memory cache. No database, no RAG.
 
 ## What it does
@@ -95,10 +96,12 @@ The offline suite covers the document loader (supersession, injection), the Gemi
 
 ## Deploy (Render, free tier)
 
+Deployed at **https://dpm101-helpdesk.onrender.com**. To reproduce:
+
 1. Push this repo to GitHub (`.env` is git-ignored; check `git status` before committing).
 2. Render dashboard: **New > Blueprint** (uses `render.yaml`) or **New > Web Service** with build `pip install -r requirements.txt` and start `uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 1`.
-3. Add the environment variable `GEMINI_API_KEY` in the dashboard. Health check path: `/health`.
-4. Open the URL and run the sample questions.
+3. Add the environment variable `GEMINI_API_KEY` in the dashboard (it is never stored in the repo). Health check path: `/health`.
+4. Open the URL and run the sample questions. `/health` reports whether the key is configured and which documents are active.
 
 ## Assumptions and known limits
 
